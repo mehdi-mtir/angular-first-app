@@ -8,7 +8,11 @@
   >Ajouter un livre</button>
 <!--Affichage conditionnel : directive *ngIf (version < 17) et @if (à partir de la version 17) -->
 @if (action === "add") {
-  <app-book-add [lastId]="books[books.length - 1].id"></app-book-add>
+  <app-book-add [lastId]="books[books.length - 1].id" (bookAdded)="addBook($event)"></app-book-add>
+}
+
+@if(action == "edit"){
+  <app-book-edit [book]="bookToEdit!" (bookEdited)="editBook($event)"></app-book-edit>
 }
 
 <table class="table table-striped">
@@ -30,8 +34,8 @@
           <td>{{book.title}}</td>
           <td>{{book.author}}</td>
           <td>{{book.price}}</td>
-          <td><button class="btn btn-primary">Editer</button></td>
-          <td><button class="btn btn-danger">Supprimer</button></td>
+          <td><button class="btn btn-primary" (click)="showEditForm(book)">Editer</button></td>
+          <td><button class="btn btn-danger" (click)="deleteBook(book.id)">Supprimer</button></td>
         </tr>
       }
     </tbody>
